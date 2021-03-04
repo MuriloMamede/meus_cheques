@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "716850700916",
+    "project_id": "meuscheques-b3d11",
+    "storage_bucket": "meuscheques-b3d11.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716850700916:android:2e21fe002e2f3b2ad92721",
+        "android_client_info": {
+          "package_name": "com.murilomamede.controledecheque.meuscheques"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "716850700916-rvibu9uagn40cd6ds98tm1bms24r0edk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.murilomamede.controledecheque.meuscheques",
+            "certificate_hash": "c2e58ef733b871a36abca92462d6d9d4b8cc6ae2"
+          }
+        },
+        {
+          "client_id": "716850700916-79npmk6ao0ni1ogjk1vasvakn7vlbbto.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDu6UKpBnxf0lEPRlnSlPx1cn2iC4rMivQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "716850700916-79npmk6ao0ni1ogjk1vasvakn7vlbbto.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
