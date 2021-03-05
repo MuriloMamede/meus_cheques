@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:meuscheques/app/global/constants.dart';
 
 class Bank {
   num bankNumber;
@@ -9,9 +10,17 @@ class Bank {
 
   factory Bank.fromDocument(DocumentSnapshot doc) {
     return Bank(
-      name: doc['name'],
-      bankNumber: doc['bankNumber'],
+      name: doc[BANK_NAME],
+      bankNumber: doc[BANK_NUMBER],
       reference: doc.reference,
     );
+  }
+
+   Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+      BANK_NAME: this.name,
+      BANK_NUMBER: this.bankNumber,
+    };
+    return map;
   }
 }

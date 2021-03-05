@@ -1,24 +1,19 @@
-const kApiKey = 'd7ce90bea6eb17de7e4fe1e792261e84';
-const kBaseUrl = 'https://api.themoviedb.org/3';
-const imageUrl = 'https://image.tmdb.org/t/p/original/';
-const imgNotFound = 'https://i.imgur.com/cb5sTfZ.png';
+const String BANK_PATH = 'banks';
+const String BANK_NAME = 'name';
+const String BANK_NUMBER= 'number';
 
-const String MYMOVIES_TABLE = 'myMovies';
-const String MYMOVIES_ID = 'id';
-const String MYMOVIES_TITLE = 'title';
-const String MYMOVIES_POSTERPATH = 'posterPath';
-const String MYMOVIES_ISWATCHED = 'isWatched';
-const String MYMOVIES_ID_PROFILE = 'idProfile';
-const String MYMOVIES_GENRES_ID = 'genresid';
+const String BANK_ACCOUNT_PATH = 'bankAccounts';
+const String BANK_ACCOUNT_NAME = 'name';
+const String BANK_ACCOUNT_AGENCY= 'agency';
+const String BANK_ACCOUNT_NUMBER= 'accountNumber';
+const String BANK_ACCOUNT_BANK= 'bankNumber';
 
-const String USER_TABLE = 'user';
-const String USER_ID = 'idUser';
-const String USER_EMAIL = 'email';
-const String USER_NAME = 'name';
-const String USER_PASSWORD = 'password';
-const String USER_BIRTHDATE = 'birthDate';
+const String CHEQUE_PATH= 'cheques';
+const String CHEQUE_NUMBER= 'number';
+const String CHEQUE_ACCOUNT_REFERENCE= 'bankAccountReference';
+const String CHEQUE_ACCOUNT_NAME= 'bankAccountName';
+const String CHEQUE_VALUE= 'value';
+const String CHEQUE_DATE= 'date';
+const String CHEQUE_STATUS= 'status';
 
-const String PROFILE_TABLE = 'profile';
-const String PROFILE_ID = 'idProfile';
-const String PROFILE_USER_ID = 'profileUserId';
-const String PROFILE_NAME = 'profileName';
+
