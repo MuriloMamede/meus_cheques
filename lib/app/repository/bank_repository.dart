@@ -10,14 +10,14 @@ final BankApiClient apiClient = BankApiClient();
 getBanks(){
   return apiClient.getBanks();
 }
-save(obj){
-  return apiClient.save(obj);
+save(bank){
+  return apiClient.save(bank);
 }
 delete(id){
   return apiClient.delete(id);
 }
-edit(obj){
-  return apiClient.edit( obj );
+edit(bank){
+  return apiClient.edit( bank );
 }
 
 

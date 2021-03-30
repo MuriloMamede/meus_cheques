@@ -1,35 +1,38 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:meuscheques/app/data/model/bank_model.dart';
 import 'package:meuscheques/app/global/constants.dart';
 
 class BankAccount {
 
-  Bank bank;
-  num agency;
-  num accountNumber;
-  String name;
   
-  DocumentReference reference;
+  int bankNumber;
+  int agency;
+  int accountNumber;
+  String accountName;
+  int accountId;
+  
 
-  BankAccount({this.name,this.bank, this.accountNumber,this.agency,this.reference});
+  BankAccount({this.accountName,this.bankNumber, this.accountNumber,this.agency, this.accountId});
+    
+  
 
-  factory BankAccount.fromDocument(DocumentSnapshot doc) {
+  factory BankAccount.fromMap(Map<String, dynamic> map) {
     return BankAccount(
-      name: doc[BANK_ACCOUNT_NAME],
-      bank: Bank.fromDocument(doc[BANK_ACCOUNT_BANK]),
-      accountNumber: doc[BANK_ACCOUNT_NUMBER],
-      agency: doc[BANK_ACCOUNT_AGENCY],
-      reference: doc.reference,
+      accountNumber: map[BANK_ACCOUNT_NUMBER],
+      accountName: map[BANK_ACCOUNT_NAME],
+      agency: map[BANK_ACCOUNT_AGENCY],
+      accountId: map[BANK_ACCOUNT_ID],
+      bankNumber: map[ACCOUNT_BANK_NUMBER],
     );
   }
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
-      BANK_ACCOUNT_NAME: this.name,
-      BANK_ACCOUNT_BANK: this.bank.toMap(),
+      BANK_ACCOUNT_NAME: this.accountName,
+      ACCOUNT_BANK_NUMBER: this.bankNumber,
       BANK_ACCOUNT_NUMBER: this.accountNumber,
       BANK_ACCOUNT_AGENCY: this.agency,
     };
+    if(accountId != null)
+    map[BANK_ACCOUNT_ID] = this.accountId;
     return map;
   }
 }

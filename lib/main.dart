@@ -4,11 +4,11 @@ import 'app/routes/app_page.dart';
 import 'app/routes/app_routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'app/theme/app_theme.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  
 
   runApp(GetMaterialApp(
     localizationsDelegates: [

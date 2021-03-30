@@ -1,42 +1,37 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meuscheques/app/global/constants.dart';
 
 
 class Cheque {
   
-  num number;
-  String bankAccountReference;
-  String bankAccountName;
+  int accountId;
+  int number;
   num value;
   DateTime date;
   String status;
 
-  DocumentReference reference;
+  Cheque({this.accountId,this.date,this.number,this.status,this.value});
 
-  Cheque({this.reference,this.bankAccountReference,this.bankAccountName,this.date,this.number,this.status,this.value});
-
-  factory Cheque.fromDocument(DocumentSnapshot doc) {
+  factory Cheque.fromMap(Map<String, dynamic> map) {
     return Cheque(
-      bankAccountReference: doc[CHEQUE_ACCOUNT_REFERENCE],
-      date: doc[CHEQUE_DATE].toDate(),
-      bankAccountName: doc[CHEQUE_ACCOUNT_NAME],
-      number: doc[CHEQUE_NUMBER],
-      status: doc[CHEQUE_STATUS],
-      value: doc[CHEQUE_VALUE],
-      reference: doc.reference,
+      accountId: map[CHEQUE_ACCOUNT_ID],
+      date: DateTime.fromMillisecondsSinceEpoch(map[CHEQUE_DATE]),
+      number: map[CHEQUE_NUMBER],
+      status: map[CHEQUE_STATUS],
+      value: map[CHEQUE_VALUE],
     );
   }
 
-
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
-      CHEQUE_ACCOUNT_NAME: this.bankAccountName,
-      CHEQUE_ACCOUNT_REFERENCE: this.bankAccountReference,
-      CHEQUE_DATE: this.date,
+      CHEQUE_DATE: this.date.millisecondsSinceEpoch,
       CHEQUE_NUMBER: this.number,
       CHEQUE_STATUS: this.status,
       CHEQUE_VALUE:  this.value,
     };
+    if (accountId != null) {
+      map[CHEQUE_ACCOUNT_ID] = this.accountId;
+    }
+
     return map;
   }
 }
