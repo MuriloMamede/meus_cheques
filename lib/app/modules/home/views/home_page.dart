@@ -4,8 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:get/get.dart';
 import 'package:meuscheques/app/modules/home/controllers/home_controller.dart';
-import 'package:meuscheques/app/modules/home/views/widgets/account_creator.dart';
-import 'package:meuscheques/app/modules/home/views/widgets/navDrawer.dart';
+import 'package:meuscheques/app/modules/home/views/widgets/account_list.dart';
 
 class HomePage extends GetView<HomeController> {
   final HomeController _homeController = Get.find<HomeController>();
@@ -16,13 +15,13 @@ class HomePage extends GetView<HomeController> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    void openAccountCreator() {
+    void openAccountLister() {
       showAnimatedDialog(
         context: context,
         animationType: DialogTransitionType.sizeFade,
         barrierDismissible: true,
         builder: (BuildContext context) {
-          return AccountCreator();
+          return AccountList();
         },
       );
     }
@@ -124,7 +123,7 @@ class HomePage extends GetView<HomeController> {
                 CommunityMaterialIcons.bank,
                 color: Colors.white,
               ),
-              onPressed: openAccountCreator)
+              onPressed: openAccountLister)
         ],
       ),
       //bottomNavigationBar: CustomBottomAppBar(),

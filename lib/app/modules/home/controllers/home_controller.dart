@@ -29,11 +29,20 @@ class HomeController extends GetxController {
       agency: 1,
     );
     account = await _bankAccountRepository.save(account);
-    accountsList.add(account);
+    if (account != null) {
+      accountsList.add(account);
+    }
     accountsList.refresh();
 
     //Cheque cheque = Cheque(bankAccountName: accounts[0].name, bankAccountReference: accounts[0].reference.id, value: 1000, date: DateTime.now(), status: 'Emitido' );
     //_chequeRepository.save(cheque);
+  }
+
+  String getBankName(int bankNumber) {
+    for (var bank in banks) {
+      if (bank.bankNumber == bankNumber) return bank.name;
+    }
+    return '';
   }
 
   @override
