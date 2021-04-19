@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 const String BANK_TABLE = 'banks';
 const String BANK_NAME = 'name';
 const String BANK_NUMBER = 'number';
@@ -31,3 +34,7 @@ const List<Map<String, dynamic>> BANCOS = [
   {"value": 249, "label": "Banco Unibanco"},
   {"value": 655, "label": "Banco Votorantim"},
 ];
+
+errorDialog(String msg) {
+  return Get.defaultDialog(title: 'Ops..', content: Text(msg));
+}

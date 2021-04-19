@@ -39,7 +39,9 @@ class BankAccountApiClient {
       return bankAccount;
     } catch (e) {
       if (e.getResultCode() == 2067)
-        Get.defaultDialog(title: "Ops..", content: Text('Conta já adicionado'));
+        errorDialog('Conta Já Existente');
+      else
+        errorDialog('Não foi possível salvar essa conta');
       return null;
     }
   }

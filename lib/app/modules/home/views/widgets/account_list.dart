@@ -16,7 +16,7 @@ class AccountList extends StatelessWidget {
       showAnimatedDialog(
         context: context,
         animationType: DialogTransitionType.sizeFade,
-        barrierDismissible: true,
+        barrierDismissible: false,
         builder: (BuildContext context) {
           return AccountCreator();
         },
@@ -49,8 +49,10 @@ class AccountList extends StatelessWidget {
                     ))),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 5, 5, 5),
-              child: InkWell(
-                  hoverColor: Colors.white,
+              child: InkResponse(
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                   onTap: openAccountCreator,
                   child: Align(
                       alignment: Alignment.center,
