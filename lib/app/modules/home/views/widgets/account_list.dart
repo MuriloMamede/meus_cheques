@@ -24,17 +24,15 @@ class AccountList extends StatelessWidget {
     }
 
     return CustomDialogWidget(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       contentPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
       titlePadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
       title: Container(
+        height: Get.height * 0.05,
         decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15), topRight: Radius.circular(15)),
           color: Get.theme.primaryColor,
-          border: Border(
-            bottom: BorderSide(
-              width: 1.0,
-              color: Get.theme.primaryColor,
-            ),
-          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,21 +63,28 @@ class AccountList extends StatelessWidget {
         ),
       ),
       content: Container(
-        height: itemHeight * _homeController.accountsList.length,
+        height: _homeController.accountsList.length < 5
+            ? itemHeight * _homeController.accountsList.length
+            : itemHeight * 5,
         width: Get.width * 0.71,
-        child: ListView.builder(
-          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, index) {
-            var account = _homeController.accountsList[index];
+        child: GetX<HomeController>(
+          init: HomeController(),
+          builder: (_) {
+            return ListView.builder(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                var account = _homeController.accountsList[index];
 
-            return AccountListTile(
-              name: account.accountName,
-              bankName: _homeController.getBankName(account.bankNumber),
-              accountNumber: account.accountNumber.toString(),
+                return AccountListTile(
+                  name: account.accountName,
+                  bankName: _homeController.getBankName(account.bankNumber),
+                  accountNumber: account.accountNumber.toString(),
+                );
+              },
+              itemCount: _homeController.accountsList.length,
             );
           },
-          itemCount: _homeController.accountsList.length,
         ),
       ),
     );

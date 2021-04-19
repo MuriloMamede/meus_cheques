@@ -34,6 +34,7 @@ class HomeController extends GetxController {
       agency: int.tryParse(accountAgencyController.text),
     );
     account = await _bankAccountRepository.save(account);
+    clearControllers();
     if (account != null) {
       accountsList.add(account);
     }
@@ -47,7 +48,7 @@ class HomeController extends GetxController {
     accountNameController.clear();
     accountNumberController.clear();
     accountAgencyController.clear();
-    titleBanco('');
+    titleBanco('Selecione Banco');
     bankSelected('');
   }
 
