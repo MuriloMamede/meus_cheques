@@ -5,6 +5,8 @@ import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:get/get.dart';
 import 'package:meuscheques/app/modules/home/controllers/home_controller.dart';
 import 'package:meuscheques/app/modules/home/views/widgets/account_list.dart';
+import 'package:meuscheques/app/modules/home/views/widgets/cheque_creator.dart';
+import 'package:meuscheques/app/modules/home/views/widgets/cheque_listTile.dart';
 
 class HomePage extends GetView<HomeController> {
   final HomeController _homeController = Get.find<HomeController>();
@@ -26,8 +28,23 @@ class HomePage extends GetView<HomeController> {
       );
     }
 
+    void openChequeCreator() {
+      showAnimatedDialog(
+        context: context,
+        animationType: DialogTransitionType.sizeFade,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return ChequeCreator();
+        },
+      );
+    }
+
     return Scaffold(
       // drawer: NavDrawer(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: openChequeCreator,
+        child: Icon(Icons.add),
+      ),
       appBar: AppBar(
         title: Text('Meus Cheques'),
         actions: [
@@ -36,7 +53,7 @@ class HomePage extends GetView<HomeController> {
             child: PopupMenuButton<String>(
               onSelected: (String s) {
                 if (s == 'editRota') {
-                } else if (s == 'deleteRota') {
+                } else if (s == 'sair') {
                   showDialog(
                     context: context,
                     builder: (_) {
@@ -44,7 +61,7 @@ class HomePage extends GetView<HomeController> {
                         actions: [
                           FlatButton(
                             child: Text(
-                              "Cancelar",
+                              "Não",
                               style: TextStyle(color: Colors.black),
                             ),
                             onPressed: () {
@@ -52,45 +69,25 @@ class HomePage extends GetView<HomeController> {
                             },
                           ),
                           FlatButton(
-                            color: Colors.red,
+                            color: Colors.red.shade100,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5)),
-                            child: Text("Excluir",
+                            child: Text("Sim",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.red,
                                 )),
                             onPressed: () {
-                              Get.back();
+                              _homeController.signOut();
                             },
                           ),
                         ],
                         title: Text(
-                          'Excluir dados',
+                          'Deseja mesmo sair?',
                           textAlign: TextAlign.start,
                           style: TextStyle(),
                         ),
-                        content: Container(
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: Colors.red[100],
-                            borderRadius: BorderRadius.all(Radius.circular(7)),
-                          ),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 10),
-                                child: Icon(Icons.warning),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Text(
-                                  'Essa ação é irreversível!',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ),
-                            ],
-                          ),
+                        content: SizedBox(
+                          height: 0,
                         ),
                       );
                     },
@@ -110,9 +107,9 @@ class HomePage extends GetView<HomeController> {
                       textAlign: TextAlign.left,
                     )),
                 PopupMenuItem<String>(
-                    value: 'deleteRota',
+                    value: 'sair',
                     child: Text(
-                      'Apagar',
+                      'Sair',
                       textAlign: TextAlign.left,
                     )),
               ],
@@ -128,17 +125,10 @@ class HomePage extends GetView<HomeController> {
       ),
       //bottomNavigationBar: CustomBottomAppBar(),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Center(
           child: Column(
             children: [
-              InkWell(
-                child: Container(
-                    color: Colors.amber,
-                    height: 50,
-                    width: 30,
-                    child: Text('texto')),
-                onTap: _homeController.saveAccount,
-              ),
               GetX<HomeController>(
                 initState: (_) {},
                 builder: (_) {
@@ -146,10 +136,11 @@ class HomePage extends GetView<HomeController> {
                     return Container(
                       height: Get.height / 3,
                       child: ListView.builder(
-                        itemBuilder: (context, index) => ListTile(
-                          title: Text(_.banks[index].name),
-                        ),
-                        itemCount: _.banks.length,
+                        itemBuilder: (context, index) {
+                          var cheque = _.cheques[index];
+                          return ChequeListTile(cheque);
+                        },
+                        itemCount: _.cheques.length,
                       ),
                     );
                   } catch (e) {

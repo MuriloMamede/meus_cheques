@@ -4,7 +4,7 @@ import 'package:meuscheques/app/data/model/bank_model.dart';
 import 'package:meuscheques/app/global/constants.dart';
 import 'package:meuscheques/app/provider/database_provider.dart';
 
-class BankApiClient {
+class BankProvider {
   final databaseProvider = DataBaseProvider.db;
 
   Future<List<Bank>> getBanks() async {

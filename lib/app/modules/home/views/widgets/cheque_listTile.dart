@@ -1,15 +1,12 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:meuscheques/app/data/model/cheque_model.dart';
 
-class AccountListTile extends StatelessWidget {
-  final name;
-  final bankName;
-  final accountNumber;
-  final bool showIcon;
+class ChequeListTile extends StatelessWidget {
+  final Cheque _cheque;
 
-  AccountListTile(
-      {this.name, this.bankName, this.accountNumber, this.showIcon = true});
+  const ChequeListTile(this._cheque);
 
   @override
   Widget build(BuildContext context) {
@@ -24,20 +21,16 @@ class AccountListTile extends StatelessWidget {
       ),
       child: Row(
         children: [
-          showIcon == true
-              ? Container(
-                  padding: const EdgeInsets.only(left: 10, right: 20),
-                  height: Get.height * 0.07,
-                  child: Align(
-                      alignment: Alignment.center,
-                      child: Icon(
-                        CommunityMaterialIcons.bank,
-                        color: Get.theme.primaryColor,
-                      )),
-                )
-              : SizedBox(
-                  width: 0,
-                ),
+          Container(
+            padding: const EdgeInsets.only(left: 10, right: 20),
+            height: Get.height * 0.07,
+            child: Align(
+                alignment: Alignment.center,
+                child: Icon(
+                  CommunityMaterialIcons.bank,
+                  color: Get.theme.primaryColor,
+                )),
+          ),
           Container(
             height: Get.height * 0.07,
             child: Align(
@@ -46,18 +39,18 @@ class AccountListTile extends StatelessWidget {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                          text: name + '\n',
+                          text: _cheque.destinatario + '\n',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black87)),
                       TextSpan(
-                          text: bankName,
+                          text: _cheque.date.toString(),
                           style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 10,
                               color: Colors.black87)),
                       TextSpan(
-                          text: '\n' + accountNumber,
+                          text: '\n' + _cheque.number,
                           style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 10,

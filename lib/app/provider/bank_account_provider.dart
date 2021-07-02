@@ -1,11 +1,39 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meuscheques/app/data/model/bankAccount_model.dart';
 import 'package:meuscheques/app/global/constants.dart';
-import 'package:meuscheques/app/provider/database_provider.dart';
 
-class BankAccountApiClient {
-  final databaseProvider = DataBaseProvider.db;
+class BankAccountProvider {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  CollectionReference get bankAccounts =>
+      FirebaseFirestore.instance.collection(BANK_ACCOUNT_PATH);
+
+  Future<List<BankAccount>> getUserBankAccounts(String idUser) {
+    List<BankAccount> bankAccountList = List();
+
+    return bankAccounts
+        .where(BANK_ACCOUNT_USER + ".id", isEqualTo: idUser)
+        .orderBy(BANK_ACCOUNT_NAME)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        bankAccountList.add(BankAccount.fromDocument(doc));
+      });
+      return bankAccountList;
+    });
+  }
+
+  Future<BankAccount> save(BankAccount bankAccount) async {
+    DocumentReference id = bankAccounts.doc();
+    bankAccount.id = id.id;
+    id.set(bankAccount.toMap());
+    return bankAccount;
+  }
+
+  Future edit(BankAccount bankAccount) async {
+    await bankAccount.reference.set(bankAccount.toMap());
+  }
+  /* final databaseProvider = DataBaseProvider.db;
 
   Future<List<BankAccount>> getBanksAccounts(int bankNumber) async {
     final db = await databaseProvider.database;
@@ -63,12 +91,12 @@ class BankAccountApiClient {
         BANK_ACCOUNT_TABLE,
         bankAccount.toMap(),
         where: "$BANK_ACCOUNT_ID = ?",
-        whereArgs: [bankAccount.accountId],
+        whereArgs: [bankAccount.id],
       );
     } catch (e) {
       if (e.getResultCode() == 1555 || e.getResultCode() == 2067)
         Get.defaultDialog(title: "Ops..", content: Text('Conta já adicionado'));
       return null;
     }
-  }
+  }*/
 }

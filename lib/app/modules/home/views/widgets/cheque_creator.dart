@@ -3,10 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:get/get.dart';
+import 'package:meuscheques/app/data/model/bankAccount_model.dart';
 
 import 'package:meuscheques/app/modules/home/controllers/home_controller.dart';
 
-class AccountCreator extends StatelessWidget {
+class ChequeCreator extends StatelessWidget {
   final HomeController _homeController = Get.find<HomeController>();
   final itemHeight = Get.height * 0.071;
   final _formKey = GlobalKey<FormState>();
@@ -26,7 +27,7 @@ class AccountCreator extends StatelessWidget {
           child: Align(
               alignment: Alignment.center,
               child: Text(
-                'Criar Conta:',
+                'Novo Cheque',
                 style: TextStyle(color: Colors.white),
               ))),
       content: Container(
@@ -38,7 +39,7 @@ class AccountCreator extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomTextField(
-                label: 'Nome da Conta:',
+                label: 'Destinatário',
                 controller: _homeController.accountNameController,
                 validator: (value) {
                   if (value.isEmpty) {
@@ -48,20 +49,19 @@ class AccountCreator extends StatelessWidget {
                 },
               ),
               CustomTextField(
-                label: 'Numero da Conta:',
+                //colocar receber valor formatado em real
+                label: 'Valor',
                 keyboardType: TextInputType.number,
                 controller: _homeController.accountNumberController,
                 validator: (value) {
                   if (value.isEmpty) {
                     return "Campo obrigatorio";
-                  } else if (int.tryParse(value) == null) {
-                    return "Deve ser apenas números";
                   }
                   return null;
                 },
               ),
               CustomTextField(
-                label: 'Agência:',
+                label: 'Número',
                 keyboardType: TextInputType.number,
                 controller: _homeController.accountAgencyController,
                 validator: (value) {
@@ -73,13 +73,13 @@ class AccountCreator extends StatelessWidget {
                   return null;
                 },
               ),
-              Container(
+              /*Container(
                 padding: const EdgeInsets.symmetric(horizontal: 13),
                 child: Obx(() => PopupMenuButton<String>(
                     onSelected: (String s) {
-                      _homeController.bankSelected(s);
-                      _homeController.titleBanco(
-                          _homeController.getBankName(int.tryParse(s)));
+                      _homeController.accountSelected(s);
+                      _homeController
+                          .titleConta(_homeController.getAccountName(s));
                     },
                     child: Container(
                       width: Get.width * 0.69,
@@ -92,7 +92,7 @@ class AccountCreator extends StatelessWidget {
                             child: Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  _homeController.titleBanco.value,
+                                  _homeController.titleConta.value,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontStyle: FontStyle.italic,
@@ -132,7 +132,114 @@ class AccountCreator extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
-                    itemBuilder: (context) => _homeController.bankItens)),
+                    itemBuilder: (context) => _homeController.accountItens)),
+              ),*/
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 13),
+                child: Obx(() {
+                  return PopupMenuButton<BankAccount>(
+                    padding: EdgeInsets.all(0),
+                    itemBuilder: (context) => _homeController.accountItens,
+                    onSelected: (BankAccount s) {
+                      var accountSelected = s;
+                      _homeController.accountSelected.value = accountSelected;
+                      // _homeController.titleConta(accountSelected.accountName);
+                    },
+                    child: Container(
+                      width: Get.width * 0.69,
+                      height: Get.height * 0.056,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: _homeController.accountSelected.value
+                                            .accountName !=
+                                        null
+                                    ? RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                                text: _homeController
+                                                        .accountSelected
+                                                        .value
+                                                        .accountName +
+                                                    '\n',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12,
+                                                    color: Colors.black87)),
+                                            TextSpan(
+                                                text: _homeController
+                                                    .getBankName(_homeController
+                                                        .accountSelected
+                                                        .value
+                                                        .bankNumber),
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    fontSize: 10,
+                                                    color: Colors.black87)),
+                                            TextSpan(
+                                                text: '\n' +
+                                                    _homeController
+                                                        .accountSelected
+                                                        .value
+                                                        .accountNumber
+                                                        .toString(),
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    fontSize: 10,
+                                                    color: Colors.black87)),
+                                          ],
+                                        ),
+                                      )
+                                    : Text(
+                                        _homeController.titleConta.value,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black54,
+                                        ),
+                                      )),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: Icon(Icons.arrow_drop_down)),
+                          ),
+                        ],
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border(
+                          bottom: BorderSide(
+                            width: 1.0,
+                            color: Colors.black26,
+                          ),
+                          top: BorderSide(
+                            width: 1.0,
+                            color: Colors.black26,
+                          ),
+                          left: BorderSide(
+                            width: 1.0,
+                            color: Colors.black26,
+                          ),
+                          right: BorderSide(
+                            width: 1.0,
+                            color: Colors.black26,
+                          ),
+                        ),
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                }),
               ),
             ],
           ),
@@ -149,7 +256,6 @@ class AccountCreator extends StatelessWidget {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () {
-                  _homeController.titleBanco('Selecione Banco');
                   _homeController.bankSelected('');
                   _homeController.clearControllers();
                   Get.back();

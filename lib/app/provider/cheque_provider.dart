@@ -1,22 +1,65 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meuscheques/app/data/model/cheque_model.dart';
 import 'package:meuscheques/app/global/constants.dart';
-import 'package:meuscheques/app/provider/database_provider.dart';
 
-class ChequeApiClient {
-  final databaseProvider = DataBaseProvider.db;
+class ChequeProvider {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  CollectionReference get cheques =>
+      FirebaseFirestore.instance.collection(CHEQUE_PATH);
+
+  Future<List<Cheque>> getUserCheques(String idUser) {
+    List<Cheque> chequeList = List();
+
+    return cheques
+        .where(CHEQUE_ACCOUNT + BANK_ACCOUNT_USER + ".id", isEqualTo: idUser)
+        .orderBy(CHEQUE_NUMBER)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        chequeList.add(Cheque.fromDocument(doc));
+      });
+      return chequeList;
+    });
+  }
+
+  Future<List<Cheque>> getBankAccountCheques(String bankAccountId) {
+    List<Cheque> chequeList = List();
+
+    return cheques
+        .where(CHEQUE_ACCOUNT + BANK_ACCOUNT_ID, isEqualTo: bankAccountId)
+        .orderBy(CHEQUE_NUMBER)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        chequeList.add(Cheque.fromDocument(doc));
+      });
+      return chequeList;
+    });
+  }
+
+  Future save(Cheque cheque) async {
+    DocumentReference id = cheques.doc();
+    cheque.id = id.id;
+    id.set(cheque.toMap());
+  }
+
+  Future edit(Cheque cheque) async {
+    await cheque.reference.set(cheque.toMap());
+  }
+  /*final databaseProvider = DataBaseProvider.db;
 
   Future<List<Cheque>> getCheques(int accountId) async {
     final db = await databaseProvider.database;
     var itens = await db.query(CHEQUE_TABLE,
         columns: [
           CHEQUE_NUMBER,
-          CHEQUE_ACCOUNT_ID,
+          CHEQUE_ACCOUNT,
           CHEQUE_VALUE,
           CHEQUE_DATE,
           CHEQUE_STATUS,
         ],
-        where: "$CHEQUE_ACCOUNT_ID = ?",
+        where: "$CHEQUE_ACCOUNT= ?",
         whereArgs: [accountId]);
 
     List<Cheque> itemList = List<Cheque>();
@@ -44,7 +87,7 @@ class ChequeApiClient {
 
     return await db.delete(
       CHEQUE_TABLE,
-      where: "$CHEQUE_NUMBER = ? and $CHEQUE_ACCOUNT_ID = ?",
+      where: "$CHEQUE_NUMBER = ? and $CHEQUE_ACCOUNT = ?",
       whereArgs: [chequeNumber, accountId],
     );
   }
@@ -55,8 +98,8 @@ class ChequeApiClient {
     return await db.update(
       CHEQUE_TABLE,
       cheque.toMap(),
-      where: "$CHEQUE_NUMBER = ? and $CHEQUE_ACCOUNT_ID = ?",
-      whereArgs: [cheque.number, cheque.accountId],
+      where: "$CHEQUE_NUMBER = ? and $CHEQUE_ACCOUNT = ?",
+      whereArgs: [cheque.number, cheque.account.id],
     );
-  }
+  }*/
 }

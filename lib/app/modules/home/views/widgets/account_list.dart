@@ -62,30 +62,48 @@ class AccountList extends StatelessWidget {
           ],
         ),
       ),
-      content: Container(
-        height: _homeController.accountsList.length < 5
-            ? itemHeight * _homeController.accountsList.length
-            : itemHeight * 5,
-        width: Get.width * 0.71,
-        child: GetX<HomeController>(
-          init: HomeController(),
-          builder: (_) {
-            return ListView.builder(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              scrollDirection: Axis.vertical,
-              itemBuilder: (context, index) {
-                var account = _homeController.accountsList[index];
+      content: GetX<HomeController>(
+        init: HomeController(),
+        initState: (_) {},
+        builder: (_) {
+          return Container(
+            height: _homeController.accountsList.length == 0
+                ? itemHeight
+                : _homeController.accountsList.length < 5
+                    ? itemHeight * _homeController.accountsList.length
+                    : itemHeight * 5,
+            width: Get.width * 0.71,
+            child: GetX<HomeController>(
+              init: HomeController(),
+              builder: (_) {
+                if (_homeController.accountsList.length == 0) {
+                  return Center(
+                      child: Container(
+                          width: Get.width * 0.65,
+                          child: Text(
+                            "Você não tem nenhuma conta adicionada ainda",
+                            textAlign: TextAlign.center,
+                          )));
+                }
+                return ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) {
+                    var account = _homeController.accountsList[index];
 
-                return AccountListTile(
-                  name: account.accountName,
-                  bankName: _homeController.getBankName(account.bankNumber),
-                  accountNumber: account.accountNumber.toString(),
+                    return AccountListTile(
+                      name: account.accountName,
+                      bankName: _homeController.getBankName(account.bankNumber),
+                      accountNumber: account.accountNumber.toString(),
+                    );
+                  },
+                  itemCount: _homeController.accountsList.length,
                 );
               },
-              itemCount: _homeController.accountsList.length,
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

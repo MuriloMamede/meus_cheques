@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:meuscheques/app/theme/colors.dart';
 
 final ThemeData appThemeData = ThemeData(
-    primaryColor: Colors.green,
-    buttonColor: Colors.green,
+    primaryColor: primaryColor,
+    buttonColor: primaryColor,
     textTheme: TextTheme(bodyText2: TextStyle(color: Colors.black)),
     brightness: Brightness.light,
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: Colors.green, foregroundColor: Colors.white),
+        backgroundColor: primaryColor, foregroundColor: Colors.white),
     accentIconTheme: IconThemeData(color: Colors.white),
-    accentColor: Colors.greenAccent,
+    accentColor: accentColor,
     appBarTheme: AppBarTheme(
       actionsIconTheme: IconThemeData(color: Colors.white),
-      color: Colors.green,
+      color: primaryColor,
       textTheme: TextTheme(
         headline6:
             TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'roboto'),
