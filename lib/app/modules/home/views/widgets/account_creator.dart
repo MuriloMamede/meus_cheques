@@ -75,11 +75,10 @@ class AccountCreator extends StatelessWidget {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 13),
-                child: Obx(() => PopupMenuButton<String>(
-                    onSelected: (String s) {
-                      _homeController.bankSelected(s);
-                      _homeController.titleBanco(
-                          _homeController.getBankName(int.tryParse(s)));
+                child: Obx(() => PopupMenuButton<dynamic>(
+                    onSelected: (dynamic bank) {
+                      _homeController.bankSelected(bank);
+                      _homeController.titleBanco(bank.name);
                     },
                     child: Container(
                       width: Get.width * 0.69,
@@ -149,8 +148,6 @@ class AccountCreator extends StatelessWidget {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () {
-                  _homeController.titleBanco('Selecione Banco');
-                  _homeController.bankSelected('');
                   _homeController.clearControllers();
                   Get.back();
                 },

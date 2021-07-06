@@ -12,7 +12,7 @@ const String BANK_ACCOUNT_NAME = 'accountName';
 const String BANK_ACCOUNT_AGENCY = 'agency';
 const String BANK_ACCOUNT_NUMBER = 'accountNumber';
 const String BANK_ACCOUNT_USER = 'accountUser';
-const String ACCOUNT_BANK_NUMBER = 'bankNumber';
+const String ACCOUNT_BANK = 'bank';
 
 const USER_PATH = "users";
 

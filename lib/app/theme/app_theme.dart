@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meuscheques/app/theme/colors.dart';
 
 final ThemeData appThemeData = ThemeData(
+    colorScheme: ColorScheme.light(primary: primaryColor),
     primaryColor: primaryColor,
     buttonColor: primaryColor,
     textTheme: TextTheme(bodyText2: TextStyle(color: Colors.black)),
@@ -16,7 +17,7 @@ final ThemeData appThemeData = ThemeData(
       textTheme: TextTheme(
         headline6:
             TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'roboto'),
-        subtitle1: TextStyle(color: Colors.white),
-        bodyText1: TextStyle(color: Colors.white),
+        subtitle1: TextStyle(color: Colors.black87),
+        bodyText1: TextStyle(color: Colors.black87),
       ),
     ));

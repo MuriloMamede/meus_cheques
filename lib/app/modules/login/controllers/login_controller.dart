@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:meuscheques/app/data/provider/login_provider.dart';
 import 'package:meuscheques/app/routes/app_pages.dart';
-import 'package:meuscheques/app/provider/login_provider.dart';
 
 class LoginController extends GetxController {
   final LoginProvider loginProvider = LoginProvider();

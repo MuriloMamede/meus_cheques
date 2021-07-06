@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meuscheques/app/data/model/bank_model.dart';
+import 'package:meuscheques/app/data/provider/database_provider.dart';
 import 'package:meuscheques/app/global/constants.dart';
-import 'package:meuscheques/app/provider/database_provider.dart';
 
 class BankProvider {
   final databaseProvider = DataBaseProvider.db;

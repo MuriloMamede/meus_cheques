@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:meuscheques/app/data/model/bank_model.dart';
 
 import 'package:meuscheques/app/data/model/user_model.dart';
 import 'package:meuscheques/app/global/constants.dart';
 
 class BankAccount {
-  int bankNumber;
+  Bank bank;
   int agency;
   int accountNumber;
   String accountName;
@@ -15,7 +16,7 @@ class BankAccount {
 
   BankAccount(
       {this.accountName,
-      this.bankNumber,
+      this.bank,
       this.accountNumber,
       this.agency,
       this.id,
@@ -28,7 +29,7 @@ class BankAccount {
       accountName: map[BANK_ACCOUNT_NAME],
       agency: map[BANK_ACCOUNT_AGENCY],
       id: map[BANK_ACCOUNT_ID],
-      bankNumber: map[ACCOUNT_BANK_NUMBER],
+      bank: Bank.fromMap(map[ACCOUNT_BANK]),
       user: UserModel.fromJson(map[BANK_ACCOUNT_USER]),
     );
   }
@@ -40,7 +41,7 @@ class BankAccount {
       accountName: map[BANK_ACCOUNT_NAME],
       agency: map[BANK_ACCOUNT_AGENCY],
       id: map[BANK_ACCOUNT_ID],
-      bankNumber: map[ACCOUNT_BANK_NUMBER],
+      bank: Bank.fromMap(map[ACCOUNT_BANK]),
       user: UserModel.fromJson(map[BANK_ACCOUNT_USER]),
       reference: docData.reference,
     );
@@ -49,7 +50,7 @@ class BankAccount {
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       BANK_ACCOUNT_NAME: this.accountName,
-      ACCOUNT_BANK_NUMBER: this.bankNumber,
+      ACCOUNT_BANK: this.bank.toMap(),
       BANK_ACCOUNT_NUMBER: this.accountNumber,
       BANK_ACCOUNT_AGENCY: this.agency,
       BANK_ACCOUNT_USER: this.user.toJson(),

@@ -3,14 +3,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:get/get.dart';
+import 'package:meuscheques/app/global/constants.dart';
+
 import 'package:meuscheques/app/modules/home/controllers/home_controller.dart';
 import 'package:meuscheques/app/modules/home/views/widgets/account_list.dart';
 import 'package:meuscheques/app/modules/home/views/widgets/cheque_creator.dart';
 import 'package:meuscheques/app/modules/home/views/widgets/cheque_listTile.dart';
+import 'package:meuscheques/app/theme/colors.dart';
 
 class HomePage extends GetView<HomeController> {
   final HomeController _homeController = Get.find<HomeController>();
-
+  final BoxDecoration bordaVerde = BoxDecoration(
+    borderRadius: BorderRadius.circular(10),
+    border: Border(
+      bottom: BorderSide(
+        width: 1.0,
+        color: Colors.green.shade300,
+      ),
+      top: BorderSide(
+        width: 1.0,
+        color: Colors.green.shade300,
+      ),
+      left: BorderSide(
+        width: 1.0,
+        color: Colors.green.shade300,
+      ),
+      right: BorderSide(
+        width: 1.0,
+        color: Colors.green.shade300,
+      ),
+    ),
+    color: Colors.white,
+  );
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -34,13 +58,55 @@ class HomePage extends GetView<HomeController> {
         animationType: DialogTransitionType.sizeFade,
         barrierDismissible: true,
         builder: (BuildContext context) {
+          controller.clearControllers();
           return ChequeCreator();
         },
       );
     }
 
+    void openYearSelector() {
+      showAnimatedDialog(
+        context: context,
+        animationType: DialogTransitionType.sizeFade,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          controller.clearControllers();
+          return Center(
+            child: Container(
+              height: Get.height * 0.3,
+              width: Get.width * 0.7,
+              child: Card(
+                child: YearPicker(
+                  selectedDate: controller.selectedYear.value,
+                  onChanged: (date) {
+                    controller.selectedYear.value = date;
+                    controller.getCheques();
+                    Get.back();
+                  },
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime(2150),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
+
+/*GestureDetector(
+            onHorizontalDragUpdate: (details) {
+              // Note: Sensitivity is integer used when you don't want to mess up vertical drag
+              int sensitivity = 8;
+              if (details.delta.dx > sensitivity) {
+                // Right Swipe
+
+              } else if (details.delta.dx < -sensitivity) {
+                //Left Swipe
+              }
+            },*/
     return Scaffold(
-      // drawer: NavDrawer(),
+      backgroundColor: Colors.grey.shade100,
+
       floatingActionButton: FloatingActionButton(
         onPressed: openChequeCreator,
         child: Icon(Icons.add),
@@ -124,32 +190,170 @@ class HomePage extends GetView<HomeController> {
         ],
       ),
       //bottomNavigationBar: CustomBottomAppBar(),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Center(
-          child: Column(
-            children: [
-              GetX<HomeController>(
-                initState: (_) {},
-                builder: (_) {
-                  try {
-                    return Container(
-                      height: Get.height / 3,
+      body: Center(
+        child: Column(
+          children: [
+            Container(
+              height: Get.height * 0.07,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Obx(() => InkWell(
+                            onTap: openYearSelector,
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  left: 15), //width: Get.width * 0.69,
+                              height: Get.height * 0.05,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          dateFormAno.format(_homeController
+                                              .selectedYear.value),
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontStyle: FontStyle.italic,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.green.shade300,
+                                          ),
+                                        )),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: Align(
+                                        alignment: Alignment.center,
+                                        child: Icon(
+                                          Icons.arrow_drop_down,
+                                          color: primaryColor,
+                                        )),
+                                  ),
+                                ],
+                              ),
+                              decoration: bordaVerde,
+                            ),
+                          )),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 13),
+                        child: Obx(() => PopupMenuButton<DateTime>(
+                            onSelected: (DateTime mes) {
+                              _homeController.selectedMonth.value = mes;
+                              controller.getCheques();
+                            },
+                            child: Container(
+                              //width: Get.width * 0.69,
+                              height: Get.height * 0.05,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          dateFormMes.format(_homeController
+                                              .selectedMonth.value),
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontStyle: FontStyle.italic,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.green.shade300,
+                                          ),
+                                        )),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: Align(
+                                        alignment: Alignment.center,
+                                        child: Icon(
+                                          Icons.arrow_drop_down,
+                                          color: primaryColor,
+                                        )),
+                                  ),
+                                ],
+                              ),
+                              decoration: bordaVerde,
+                            ),
+                            itemBuilder: (context) => controller.monthItens)),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 13),
+                    child: Obx(() => PopupMenuButton<DateTime>(
+                        onSelected: (DateTime mes) {
+                          _homeController.selectedMonth.value = mes;
+                          controller.getCheques();
+                        },
+                        child: Container(
+                          //width: Get.width * 0.69,
+                          height: Get.height * 0.05,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      'Conta selecionada',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.green.shade300,
+                                      ),
+                                    )),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: Icon(
+                                      Icons.arrow_drop_down,
+                                      color: primaryColor,
+                                    )),
+                              ),
+                            ],
+                          ),
+                          decoration: bordaVerde,
+                        ),
+                        itemBuilder: (context) => controller.monthItens)),
+                  ),
+                ],
+              ),
+            ),
+            GetX<HomeController>(
+              initState: (_) {},
+              builder: (_) {
+                try {
+                  return Expanded(
+                    child: Container(
+                        child: RefreshIndicator(
+                      onRefresh: controller.getCheques,
                       child: ListView.builder(
                         itemBuilder: (context, index) {
                           var cheque = _.cheques[index];
+
                           return ChequeListTile(cheque);
                         },
                         itemCount: _.cheques.length,
                       ),
-                    );
-                  } catch (e) {
-                    return CircularProgressIndicator();
-                  }
-                },
-              ),
-            ],
-          ),
+                    )),
+                  );
+                } catch (e) {
+                  return CircularProgressIndicator();
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

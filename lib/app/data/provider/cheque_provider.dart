@@ -12,8 +12,29 @@ class ChequeProvider {
     List<Cheque> chequeList = List();
 
     return cheques
-        .where(CHEQUE_ACCOUNT + BANK_ACCOUNT_USER + ".id", isEqualTo: idUser)
+        .where(CHEQUE_ACCOUNT + "." + BANK_ACCOUNT_USER + ".id",
+            isEqualTo: idUser)
         .orderBy(CHEQUE_NUMBER)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        chequeList.add(Cheque.fromDocument(doc));
+      });
+      return chequeList;
+    });
+  }
+
+  Future<List<Cheque>> getMonthUserCheques(String idUser, DateTime date) {
+    List<Cheque> chequeList = List();
+
+    var start = DateTime(date.year, date.month, 1).millisecondsSinceEpoch;
+    var end = DateTime(date.year, date.month + 1, 0).millisecondsSinceEpoch;
+    return cheques
+        .where(CHEQUE_ACCOUNT + "." + BANK_ACCOUNT_USER + ".id",
+            isEqualTo: idUser)
+        .where(CHEQUE_DATE, isGreaterThanOrEqualTo: start)
+        .where(CHEQUE_DATE, isLessThanOrEqualTo: end)
+        .orderBy(CHEQUE_DATE)
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
@@ -38,10 +59,11 @@ class ChequeProvider {
     });
   }
 
-  Future save(Cheque cheque) async {
+  Future<Cheque> save(Cheque cheque) async {
     DocumentReference id = cheques.doc();
     cheque.id = id.id;
     id.set(cheque.toMap());
+    return cheque;
   }
 
   Future edit(Cheque cheque) async {

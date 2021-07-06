@@ -94,7 +94,7 @@ class AccountList extends StatelessWidget {
 
                     return AccountListTile(
                       name: account.accountName,
-                      bankName: _homeController.getBankName(account.bankNumber),
+                      bankName: account.bank.name,
                       accountNumber: account.accountNumber.toString(),
                     );
                   },
