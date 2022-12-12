@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>189180098173-g9caksk1011kgm90ggn0rj7klkq2dft6.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.189180098173-g9caksk1011kgm90ggn0rj7klkq2dft6</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>189180098173-vbofnpkrtt3ovuocvrr1gh4c4edr5cco.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBaBkSvepLddRbSma0I66l1dSetEQjRn30</string>
+	<key>GCM_SENDER_ID</key>
+	<string>189180098173</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.murilomamede.controledecheque.meuscheques.dev</string>
+	<key>PROJECT_ID</key>
+	<string>meus-cheques-dev</string>
+	<key>STORAGE_BUCKET</key>
+	<string>meus-cheques-dev.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:189180098173:ios:e916119f5cf2569f71a314</string>
+</dict>
+</plist>
